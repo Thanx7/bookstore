@@ -1,6 +1,7 @@
 package org.training.allegro.controllers;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,11 +17,12 @@ public class Main extends Abstract {
 	protected void performTask(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		System.out.println("1");
+		Date d = new Date();
+		request.setAttribute("date", d);
+		
 		try {
 			//Jena.example3(false);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

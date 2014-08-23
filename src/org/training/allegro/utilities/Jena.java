@@ -1,5 +1,5 @@
 package org.training.allegro.utilities;
-/*
+
 import java.util.List;
 
 import org.openrdf.OpenRDFException;
@@ -19,9 +19,9 @@ import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.RDFNode;
-*/
+
 public class Jena {
-/*
+
 	static private final String SERVER_URL = "http://epbyminw2052t1:10035";
 	static private final String CATALOG_ID = "/";
 	static private final String USERNAME = "test";
@@ -124,5 +124,5 @@ public class Jena {
 		} finally { // model.close();
 		}
 
-	}*/
+	}
 }
