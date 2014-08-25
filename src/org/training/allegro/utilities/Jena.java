@@ -2,9 +2,6 @@ package org.training.allegro.utilities;
 
 import java.util.List;
 
-import org.openrdf.OpenRDFException;
-import org.openrdf.repository.RepositoryException;
-
 import com.franz.agraph.jena.AGGraph;
 import com.franz.agraph.jena.AGGraphMaker;
 import com.franz.agraph.jena.AGModel;
@@ -29,39 +26,20 @@ public class Jena {
 
 	public static AGGraphMaker example1(boolean close) throws Exception {
 		AGServer server = new AGServer(SERVER_URL, USERNAME, PASSWORD);
+		AGCatalog catalog = server.getCatalog(CATALOG_ID);
+		AGRepository myRepository = null;
+		AGRepositoryConnection conn = null;
 		try {
 			System.out.println("Available catalogs: " + server.listCatalogs());
-		} catch (OpenRDFException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		AGCatalog catalog = server.getCatalog(CATALOG_ID);
-		try {
 			System.out.println("Available repositories in catalog "
 					+ (catalog.getCatalogName()) + ": "
 					+ catalog.listRepositories());
-		} catch (OpenRDFException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		AGRepository myRepository = null;
-		try {
 			myRepository = catalog.openRepository("Bookstore");
-		} catch (RepositoryException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		AGRepositoryConnection conn = null;
-		try {
 			conn = myRepository.getConnection();
-
 			System.out.println("Got a connection.");
 			System.out.println("Repository " + (myRepository.getRepositoryID())
 					+ " is up! It contains " + (conn.size()) + " statements.");
-		} catch (RepositoryException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 

@@ -21,7 +21,7 @@ public class Main extends Abstract {
 		request.setAttribute("date", d);
 
 		try {
-			Jena.example3(false);
+			Jena.example1(false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

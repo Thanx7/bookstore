@@ -23,6 +23,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="build"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jena/xercesImpl-2.10.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
