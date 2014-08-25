@@ -17,8 +17,10 @@
             
                 <p>Welcome!</p>
                 
+                <p>SELECT ?s ?p ?o  WHERE {?s ?p ?o .}</p>
+                
                 <ul class="nav nav-pills">
-				  <li class="active"><a href="${url}/jsp/main">Start Bookstore</a></li>
+				  <li class="active"><a href="${url}/jsp/main">Select</a></li>
 				</ul>
                 
             </div>

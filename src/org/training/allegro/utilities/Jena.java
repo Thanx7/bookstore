@@ -1,5 +1,6 @@
 package org.training.allegro.utilities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.franz.agraph.jena.AGGraph;
@@ -18,11 +19,12 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class Jena {
-
 	static private final String SERVER_URL = "http://epbyminw2052t1:10035";
 	static private final String CATALOG_ID = "/";
 	static private final String USERNAME = "test";
 	static private final String PASSWORD = "1";
+
+	private static List<List<RDFNode>> triples = new ArrayList<>();
 
 	public static AGGraphMaker example1(boolean close) throws Exception {
 		AGServer server = new AGServer(SERVER_URL, USERNAME, PASSWORD);
@@ -30,13 +32,11 @@ public class Jena {
 		AGRepository myRepository = null;
 		AGRepositoryConnection conn = null;
 		try {
-			System.out.println("Available catalogs: " + server.listCatalogs());
 			System.out.println("Available repositories in catalog "
 					+ (catalog.getCatalogName()) + ": "
 					+ catalog.listRepositories());
 			myRepository = catalog.openRepository("Bookstore");
 			conn = myRepository.getConnection();
-			System.out.println("Got a connection.");
 			System.out.println("Repository " + (myRepository.getRepositoryID())
 					+ " is up! It contains " + (conn.size()) + " statements.");
 		} catch (Exception e) {
@@ -44,16 +44,8 @@ public class Jena {
 		}
 
 		AGGraphMaker maker = new AGGraphMaker(conn);
-		System.out.println("Got a graph maker for the connection.");
-
-		List<String> indices = conn.listValidIndices();
-		System.out.println("All valid triple indices: " + indices);
-
-		indices = conn.listIndices();
-		System.out.println("Current triple indices: " + indices);
 
 		if (close) {
-			// tidy up
 			maker.close();
 			conn.close();
 			myRepository.shutDown();
@@ -63,13 +55,12 @@ public class Jena {
 	}
 
 	public static AGModel example2(boolean close) throws Exception {
-		System.out.println("\nStarting example2().");
 		AGGraphMaker maker = example1(false);
 		AGGraph graph = maker.getGraph();
 		AGModel model = new AGModel(graph);
 
-		System.out.println("Triple count before inserts: " + model.size()); //
-		// model.add(bob, name, bobsName);
+		System.out.println("Triple count: " + model.size());
+
 		if (close) {
 			model.close();
 			graph.close();
@@ -79,9 +70,9 @@ public class Jena {
 		return model;
 	}
 
-	public static void example3(boolean close) throws Exception {
+	public static List<List<RDFNode>> example3(boolean close) throws Exception {
 		AGModel model = example2(false);
-		System.out.println("\nStarting example3().");
+
 		try {
 			String queryString = "SELECT ?s ?p ?o  WHERE {?s ?p ?o .}";
 
@@ -90,17 +81,21 @@ public class Jena {
 			try {
 				ResultSet results = qe.execSelect();
 
+				int count = 1;
 				while (results.hasNext()) {
 					QuerySolution result = results.next();
-					RDFNode s = result.get("s");
-					RDFNode p = result.get("p");
-					RDFNode o = result.get("o");
-					System.out.println(" { " + s + " " + p + " " + o + " . }");
+					List<RDFNode> triple = new ArrayList<>();
+					triple.add(result.get("s"));
+					triple.add(result.get("p"));
+					triple.add(result.get("o"));
+					triples.add(triple);
 				}
-			} finally { // qe.close();
+			} finally {
+				qe.close();
 			}
-		} finally { // model.close();
+		} finally {
+			model.close();
 		}
-
+		return triples;
 	}
 }

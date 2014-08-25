@@ -23,13 +23,19 @@
                 <table class="table table-hover table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th>A</th>
-                            <th>B</th>
+                            <th>Subject</th>
+                            <th>Predicate</th>
+                            <th>Object</th>                            
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>${date}</td><td>2</td>
-                        </tr>
+      <c:forEach items="${triples}" var="t">
+        <tr>
+          <td><c:out value="${t[0]}" /></td>
+          <td><c:out value="${t[1]}" /></td>
+          <td><c:out value="${t[2]}" /></td>
+        </tr>
+      </c:forEach>
                     </tbody>
                 </table>
                 
