@@ -38,6 +38,21 @@ public class Ex extends Abstract {
 		case 2:
 			queryString = "SELECT ?s ?o WHERE {?s <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?o}";
 			break;
+		case 3:
+			queryString = "SELECT ?s ?o WHERE {  {?s <http://example.org/quantity> ?o}  UNION  {?s <http://example.org/price> ?o}}";
+			break;
+		case 4:
+			queryString = "select ?s where { ?s rdf:type <owl:Class> }";
+			break;
+		case 5:
+			queryString = "SELECT ?s ?o WHERE { ?s <http://example.org/quantity> ?o . FILTER (?o >= 100)}";
+			break;
+		case 6:
+			queryString = "SELECT ?s ?p ?o WHERE { ?s ?p ?o . FILTER regex(?o, \"Map\") }";
+			break;
+		case 7:
+			queryString = "SELECT ?s ?p ?o WHERE { ?s <http://example.org/quantity> ?p . OPTIONAL {?s <http://example.org/price> ?o }}";
+			break;
 		default:
 			break;
 		}
@@ -62,5 +77,4 @@ public class Ex extends Abstract {
 		request.setAttribute("triples", triples);
 		jump("/jsp/ex.jsp", request, response);
 	}
-
 }
