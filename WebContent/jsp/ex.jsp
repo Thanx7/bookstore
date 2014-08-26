@@ -21,13 +21,6 @@
             	<br>
             
                 <table class="table table-hover table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Subject</th>
-                            <th>Predicate</th>
-                            <th>Object</th>                            
-                        </tr>
-                    </thead>
                     <tbody>
       <c:forEach items="${triples}" var="t">
         <tr>

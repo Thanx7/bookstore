@@ -62,18 +62,19 @@ public class ExportStatementsView implements View {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public void render(Map model, HttpServletRequest request, HttpServletResponse response)
-		throws Exception
-	{
-		RepositoryConnection repositoryCon = RepositoryInterceptor.getRepositoryConnection(request);
+	public void render(Map model, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		RepositoryConnection repositoryCon = RepositoryInterceptor
+				.getRepositoryConnection(request);
 
-		Resource subj = (Resource)model.get(SUBJECT_KEY);
-		URI pred = (URI)model.get(PREDICATE_KEY);
-		Value obj = (Value)model.get(OBJECT_KEY);
-		Resource[] contexts = (Resource[])model.get(CONTEXTS_KEY);
-		boolean useInferencing = (Boolean)model.get(USE_INFERENCING_KEY);
+		Resource subj = (Resource) model.get(SUBJECT_KEY);
+		URI pred = (URI) model.get(PREDICATE_KEY);
+		Value obj = (Value) model.get(OBJECT_KEY);
+		Resource[] contexts = (Resource[]) model.get(CONTEXTS_KEY);
+		boolean useInferencing = (Boolean) model.get(USE_INFERENCING_KEY);
 
-		RDFWriterFactory rdfWriterFactory = (RDFWriterFactory)model.get(FACTORY_KEY);
+		RDFWriterFactory rdfWriterFactory = (RDFWriterFactory) model
+				.get(FACTORY_KEY);
 
 		RDFFormat rdfFormat = rdfWriterFactory.getRDFFormat();
 
@@ -94,17 +95,19 @@ public class ExportStatementsView implements View {
 			if (rdfFormat.getDefaultFileExtension() != null) {
 				filename += "." + rdfFormat.getDefaultFileExtension();
 			}
-			response.setHeader("Content-Disposition", "attachment; filename=" + filename);
+			response.setHeader("Content-Disposition", "attachment; filename="
+					+ filename);
 
-			repositoryCon.exportStatements(subj, pred, obj, useInferencing, rdfWriter, contexts);
+			repositoryCon.exportStatements(subj, pred, obj, useInferencing,
+					rdfWriter, contexts);
 
 			out.close();
-		}
-		catch (RDFHandlerException e) {
-			throw new ServerHTTPException("Serialization error: " + e.getMessage(), e);
-		}
-		catch (RepositoryException e) {
-			throw new ServerHTTPException("Repository error: " + e.getMessage(), e);
+		} catch (RDFHandlerException e) {
+			throw new ServerHTTPException("Serialization error: "
+					+ e.getMessage(), e);
+		} catch (RepositoryException e) {
+			throw new ServerHTTPException(
+					"Repository error: " + e.getMessage(), e);
 		}
 	}
 }

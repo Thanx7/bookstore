@@ -17,12 +17,27 @@
             
                 <p>Welcome!</p>
                 
+                <p>Triple count: ${size}.</p>
+                
                 <p>SELECT ?s ?p ?o  WHERE {?s ?p ?o .}</p>
                 
                 <ul class="nav nav-pills">
-				  <li class="active"><a href="${url}/jsp/main">Select</a></li>
+				  <li class="active"><a href="${url}/main">Select</a></li>
 				</ul>
-                
+				
+				<br><p>SELECT ?s<br>
+					WHERE { ?s  &lt;http://www.w3.org/2000/01/rdf-schema#subClassOf&gt; &lt;http://dbpedia.org/ontology/#PrintedMatter&gt; }</p>
+                <ul class="nav nav-pills">
+				  <li class="active"><a href="${url}/ex?zIndex=1">Select</a></li>
+				</ul>
+				                
+				<br><p>SELECT ?s ?o<br>
+					WHERE {?s &lt;http://www.w3.org/2000/01/rdf-schema#subClassOf&gt; ?o}<br>
+					(single solution)</p>
+                <ul class="nav nav-pills">
+				  <li class="active"><a href="${url}/ex?zIndex=2">Select</a></li>
+				</ul>
+       
             </div>
         </div>
     </div>
